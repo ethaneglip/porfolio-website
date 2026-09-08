@@ -1,0 +1,596 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    margin: 0;
+    font-family: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    background: #f4f1ea;
+    color: #111;
+    font-weight: bold;
+    font-size: 48px;
+}
+
+h2 {
+    margin: 0;
+    font-family: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    background: #f4f1ea;
+    color: #111;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 24px;
+}
+
+h3 {
+    margin: 0;
+    font-family: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    background: #f4f1ea;
+    color: #111;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+h4 {
+    margin: 0;
+    font-family: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    background: #f4f1ea;
+    color: #111;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 18px;
+}
+
+body {
+    margin: 0;
+    font-family: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    background: #f4f1ea;
+    color: #111;
+    color: inherit;
+    text-decoration: inherit;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;              /* keeps it above other content as things scroll under it */
+    background: #f4f1ea;       /* needs a background or content will show through */
+    border-bottom: 1px solid #ddd;   /* the thin line you asked about */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 40px;
+}
+
+.logo {
+    font-weight: 700;
+    letter-spacing: 4px;
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.menu-toggle .icon {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.menu-toggle .label {
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+  /* ---------- The overlay itself ---------- */
+.overlay {
+    position: fixed;      /* stays put, covers the viewport regardless of scroll */
+    inset: 0;              /* shorthand for top:0; right:0; bottom:0; left:0; */
+    background: #f4f1ea;
+    color: #0a0a0a;
+
+    /* Hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    /* Smooth fade + slight rise when it opens */
+    transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 100;
+}
+
+  /* This class gets toggled by JS to show the menu */
+.overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.overlay-close {
+    position: absolute;
+    top: 24px;
+    right: 40px;
+    background: none;
+    border: none;
+    color: #0a0a0a;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-family: inherit;
+}
+
+.overlay-close .icon { font-size: 22px; }
+.overlay-close .label { font-size: 11px; letter-spacing: 2px; }
+
+.nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    text-align: center;
+}
+
+.nav-item .eyebrow {
+    display: block;
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+.nav-item a {
+    color: #0a0a0a;
+    text-decoration: none;
+    font-size: 42px;
+    font-weight: 800;
+    transition: opacity 0.2s ease;
+}
+
+.nav-item a:hover,
+.nav-item a:focus-visible {
+    opacity: 0.6;
+}
+
+.test1 {
+    color: black;
+    h1 {
+        font-family: sans-serif;
+    }
+    p {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+}
+
+.page-content {
+  padding: 50px 80px;
+}
+
+.page-content p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.page-content-list {
+  padding: 0px 80px;
+}
+
+.page-content-list p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.hero-image {
+  position: relative;      /* lets .hero-text position itself against this box */
+  width: 100vw;
+  height: calc(100vh - 87px);
+  overflow: hidden;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 0% 30%; /* keep left side of image in frame */
+}
+
+/* the fade */
+.hero-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    transparent 30%,
+    #f4f1ea 45%      /* match your page's background color */
+  );
+  pointer-events: none;   /* lets clicks pass through to whatever's beneath */
+}
+
+/* the centered text */
+.hero-text {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translateY(-50%);
+  text-align: center;
+  max-width: 30%;
+  z-index: 1;   /* sits above the fade */
+}
+
+.hero-text h1 {
+    font-size: 48px;
+}
+
+.hero-text p {
+    font-size: 18px;
+}
+
+.social-links {
+  position: absolute;
+  bottom: 24px;
+  right: 40px;
+  display: flex;
+  gap: 20px;         /* spacing between each link */
+}
+
+.social-links a {
+  color: #0a0a0a;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.social-links a:hover {
+  opacity: 0.6;
+}
+
+.score-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;         /* spacing between each link */
+}
+
+.score-links a {
+    display: flex;          
+    align-items: center;    
+    gap: 8px;                  /* spacing between icon and text */
+    color: #0a0a0a;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.score-links a:hover {
+  opacity: 0.6;
+}
+
+.score-links img {
+  width: 20px;             /* control the icon's size explicitly */
+  height: 20px;
+}
+
+.media-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;      /* spacing between the score button and the audio player */
+}
+
+.back-link {
+  position: fixed;
+  top: calc(87px + 20px);
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0a0a0a;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.back-link:hover {
+  opacity: 0.6;
+}
+
+blockquote {
+  font-style: italic;
+  padding-left: 40px;
+  font-size: 18px;
+}
+
+
+.bio-page {
+  display: flex;
+  align-items: center;    /* vertically centers both columns against each other */
+  gap: 60px;
+  padding: 80px;
+  min-height: calc(100vh - 87px);   /* fills remaining screen below navbar */
+}
+
+.bio-text {
+  flex: 1;      /* takes up equal share of available space */
+}
+
+.bio-text h1 {
+  margin-bottom: 20px;
+}
+
+.bio-photo {
+  flex: 1;
+  display: flex;
+  justify-content: center;   /* centers the image horizontally in its column */
+}
+
+.bio-photo img {
+  max-height: 70vh;   /* caps the photo's height so it can't grow past this */
+  width: auto;          /* lets width scale proportionally, keeps aspect ratio */
+  object-fit: contain;  /* ensures no cropping/distortion while scaling down */
+  border-radius: 4px;   /* optional, subtle rounded corners */
+}
+
+.movements {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;      /* spacing between each movement row */
+  margin-top: 0px;
+}
+
+.movement {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.movement h3 {
+  min-width: 50px;   /* keeps titles aligned even if lengths differ */
+  font-weight: normal;
+  font-style: italic;
+}
+
+.movement audio {
+  flex: 1;               /* audio player fills remaining space */
+  max-width: 400px;   /* optional, caps how wide it can stretch */
+}
+
+.piece-media {
+  display: flex;
+  align-items: center;   /* or align-items: stretch, see note below */
+  gap: 24px;
+  padding: 0;
+}
+
+.divider {
+  width: 1px;
+  background: #0a0a0a;
+  align-self: stretch;   /* makes the line stretch to match the tallest sibling's height */
+}
+
+.page-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  padding: 24px 40px;
+}
+
+.page-footer a {
+  color: #0a0a0a;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.page-footer a:hover {
+  opacity: 0.6;
+}
+
+/* ============================
+   MOBILE STYLES (768px and below)
+   ============================ */
+@media (max-width: 768px) {
+
+  /* Headings — scale down from desktop sizes */
+  h1 { font-size: 32px; }
+  h2 { font-size: 18px; }
+
+  /* Top bar — tighten padding on small screens */
+  .topbar {
+    padding: 16px 20px;
+  }
+
+  /* Full-screen menu links — 42px is too large on mobile */
+  .nav-item a {
+    font-size: 28px;
+  }
+
+  .nav-list {
+    gap: 24px;
+  }
+
+  /* General page content padding — 50px/80px is too wide on mobile */
+  .page-content,
+  .page-content-list {
+    padding: 30px 20px;
+  }
+
+  /* Hero image + overlay text */
+  .hero-image {
+    height: calc(100vh - 65px);   /* adjust 65px if your mobile navbar height differs */
+  }
+
+  .hero-text {
+    max-width: 60%;
+    right: 6%;
+  }
+
+  .hero-text h1 {
+    font-size: 28px;
+  }
+
+  .hero-text p {
+    font-size: 14px;
+  }
+
+  .social-links {
+    bottom: 16px;
+    right: 20px;
+    gap: 12px;
+  }
+
+  .social-links a {
+    font-size: 12px;
+  }
+
+  /* Bio page — stack instead of side-by-side */
+  .bio-page {
+    flex-direction: column;
+    padding: 40px 20px;
+    gap: 30px;
+    min-height: auto;   /* let it size naturally once stacked */
+  }
+
+  .bio-photo img {
+    max-height: 50vh;
+  }
+
+  /* Score button + audio player + movements — stack instead of side-by-side */
+  .piece-media,
+  .media-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .divider {
+    display: none;   /* a vertical divider doesn't make sense once stacked */
+  }
+
+  .movement {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .movement h3 {
+    min-width: unset;
+  }
+
+  .movement audio {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Back-to-music link — sits closer to navbar on mobile */
+  .back-link {
+    top: calc(65px + 12px);   /* match your mobile navbar height */
+    right: 20px;
+    font-size: 12px;
+  }
+
+  /* Footer — center instead of right-align on narrow screens */
+  .page-footer {
+    justify-content: center;
+    padding: 16px 20px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+}
+
+/* ============================
+   SMALL PHONES (480px and below)
+   ============================ */
+@media (max-width: 480px) {
+  h1 { font-size: 26px; }
+
+  .nav-item a {
+    font-size: 24px;
+  }
+
+  .hero-text {
+    max-width: 75%;
+  }
+}
+
+#contact:hover {
+  opacity: 0.6;
+}
+
+.corner-footer {
+  position: absolute;
+  bottom: 24px;
+  right: 40px;
+  display: flex;
+  gap: 20px;
+}
+
+.corner-footer a {
+  color: #0a0a0a;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.corner-footer a:hover {
+  opacity: 0.6;
+}
+
+.logo {
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: inherit;          
+  text-decoration: none;   
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+a:hover {
+  opacity: 0.6;
+}
+
+.music-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.music-item {
+  display: block;   
+}
+
+.music-item h2 {
+  font-style: italic;
+}
+
+.music-item .meta {
+  font-style: italic;
+  font-weight: bold;
+}
+
+html, body {
+  overscroll-behavior: none;
+}
