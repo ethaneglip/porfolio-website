@@ -52,7 +52,7 @@ export default function PiecePage() {
         {piece.premiereNote && (
           <>
             <p><br /></p>
-            <p>{piece.premiereNote}</p>
+            <p dangerouslySetInnerHTML={{ __html: piece.premiereNote }} />
           </>
         )}
 
